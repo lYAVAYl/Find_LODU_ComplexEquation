@@ -5,8 +5,87 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PP_1._3_LODU"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Нахождение ЛОДУ" Height="450" Width="900"
+        MinHeight="450" MinWidth="900">
+    <Grid x:Name="grid1" Margin="0,0,0.333,-0.333" Background="#FF1E1E1E">
+        <TextBlock 
+            x:Name="Exersise"
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            Margin="132,13,108,0" 
+            Height="44" Width="553"
+            Foreground="#FF568FA7" 
+            FontStyle="Italic">
+            <Run Text="ПП1-3-5 Напишите программу решения линейного однородного дифференциального "/>
+            <Run Text="уравнения не более чем четвертого порядка с постоянными действительными "/>
+            <Run Text="коэффициентами."/>
+        </TextBlock>
+
+        <TextBlock 
+            x:Name="Halava_L"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Height="660"
+            Width="116" 
+            Margin="-1,0,0,0" 
+            TextWrapping="Wrap" 
+            Foreground="#FFC4BFBF" 
+            FontWeight="Bold" 
+            FontSize="48"   >
+            <TextBlock.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.9"/>
+                    <GradientStop Color="Red"/>
+                </LinearGradientBrush>
+
+            </TextBlock.Background>
+            <Run Text="   Х"/><LineBreak/>
+            <Run Text="   А"/><LineBreak/>
+            <Run Text="   Л"/><LineBreak/>
+            <Run Text="   Я"/><LineBreak/>
+            <Run Text="   В"/><LineBreak/>
+            <Run Text="   А"/></TextBlock>
+
+        <TextBlock 
+            x:Name="Halava_R"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Height="660"
+            Width="116" 
+            TextWrapping="Wrap" 
+            Foreground="#FFC4BFBF" 
+            FontWeight="Bold" 
+            FontSize="48"   >
+            <TextBlock.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.9"/>
+                    <GradientStop Color="Red"/>
+                </LinearGradientBrush>
+            </TextBlock.Background>
+            <Run Text="   Х"/><LineBreak/>
+            <Run Text="   А"/><LineBreak/>
+            <Run Text="   Л"/><LineBreak/>
+            <Run Text="   Я"/><LineBreak/>
+            <Run Text="   В"/><LineBreak/>
+            <Run Text="   А"/></TextBlock>
+
+
+        <TextBox
+            x:Name="textBox_Equation"
+            HorizontalAlignment="Center" Height="20" 
+            VerticalAlignment="Center" Width="300"
+            TextWrapping="Wrap" Text="Введите уравнение..." 
+            FontStyle="Italic" Foreground="#FF686868" GotFocus="EnterEquation"/>
+
+        <Button 
+            Content="Ввести" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            Height="35" Width="75" Margin="410,231,408,155" Click="Button_Click"
+            />
+
+
+
     </Grid>
 </Window>

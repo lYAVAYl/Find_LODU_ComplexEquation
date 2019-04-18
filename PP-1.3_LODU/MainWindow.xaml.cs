@@ -20,9 +20,35 @@ namespace PP_1._3_LODU
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string Out_text = "Введите уравнение...";
+        private string equation;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+
+        private void ResetText()
+        {
+            textBox_Equation.Text = Out_text;
+        }
+
+        private void EnterEquation(object sender, RoutedEventArgs e)
+        {
+            if (textBox_Equation.Text == Out_text)
+                textBox_Equation.Clear();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (textBox_Equation.Text == "" || textBox_Equation.Text == Out_text)
+                MessageBox.Show("Вы ничего не ввели!");
+            else
+            {
+                equation = textBox_Equation.Text;
+                MessageBox.Show(equation);
+            }
         }
     }
 }
