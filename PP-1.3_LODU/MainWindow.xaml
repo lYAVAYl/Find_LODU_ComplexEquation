@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="Нахождение ЛОДУ" Height="450" Width="900"
         MinHeight="450" MinWidth="900">
-    <Grid x:Name="grid1" Margin="0,0,0.333,-0.333" Background="#FF1E1E1E">
+    <Grid x:Name="grid1" Margin="0,0,0.333,-0.333" Background="#FF1E1E1E" GotFocus="ResetColor_5">
+
+
+
         <TextBlock 
             x:Name="Exersise"
             TextWrapping="Wrap" 
@@ -22,62 +25,6 @@
             <Run Text="коэффициентами."/>
         </TextBlock>
 
-        <TextBlock 
-            x:Name="Halava_L"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Height="660"
-            Width="116" 
-            Margin="-1,0,0,0" 
-            TextWrapping="Wrap" 
-            Foreground="#FFC4BFBF" 
-            FontWeight="Bold" 
-            FontSize="48"   >
-            <TextBlock.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0.9"/>
-                    <GradientStop Color="Red"/>
-                </LinearGradientBrush>
-
-            </TextBlock.Background>
-            <Run Text="   Х"/><LineBreak/>
-            <Run Text="   А"/><LineBreak/>
-            <Run Text="   Л"/><LineBreak/>
-            <Run Text="   Я"/><LineBreak/>
-            <Run Text="   В"/><LineBreak/>
-            <Run Text="   А"/></TextBlock>
-
-        <TextBlock 
-            x:Name="Halava_R"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Height="660"
-            Width="116" 
-            TextWrapping="Wrap" 
-            Foreground="#FFC4BFBF" 
-            FontWeight="Bold" 
-            FontSize="48"   >
-            <TextBlock.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0.9"/>
-                    <GradientStop Color="Red"/>
-                </LinearGradientBrush>
-            </TextBlock.Background>
-            <Run Text="   Х"/><LineBreak/>
-            <Run Text="   А"/><LineBreak/>
-            <Run Text="   Л"/><LineBreak/>
-            <Run Text="   Я"/><LineBreak/>
-            <Run Text="   В"/><LineBreak/>
-            <Run Text="   А"/></TextBlock>
-
-
-        <TextBox
-            x:Name="textBox_Equation"
-            HorizontalAlignment="Center" Height="20" 
-            VerticalAlignment="Center" Width="300"
-            TextWrapping="Wrap" Text="Введите уравнение..." 
-            FontStyle="Italic" Foreground="#FF686868" GotFocus="EnterEquation"/>
-
         <Button 
             Content="Ввести" 
             HorizontalAlignment="Center" 
@@ -85,7 +32,51 @@
             Height="35" Width="75" Margin="410,231,408,155" Click="Button_Click"
             />
 
+        <TextBox Panel.ZIndex="1"
+            x:Name="a1"
+            HorizontalAlignment="Center" Height="30" 
+            VerticalAlignment="Center" Width="87"
+            TextWrapping="Wrap" Text="" 
+            FontStyle="Italic" Foreground="#FF686868" Margin="129,175,677,216" BorderBrush="Black" GotFocus="ResetColor_1"/>
 
+
+
+        <TextBox Panel.ZIndex="1"
+            x:Name="a2"
+            HorizontalAlignment="Center" Height="30" 
+            VerticalAlignment="Center" Width="87"
+            TextWrapping="Wrap" Text="" 
+            FontStyle="Italic" Foreground="#FF686868" Margin="258,175,548,216" BorderBrush="Black" GotFocus="ResetColor_2"/>
+
+        <TextBox Panel.ZIndex="1"
+            x:Name="a3"
+            HorizontalAlignment="Center" Height="30" 
+            VerticalAlignment="Center" Width="86"
+            TextWrapping="Wrap" Text="" 
+            FontStyle="Italic" Foreground="#FF686868" Margin="385,176,422,215" BorderBrush="Black" GotFocus="ResetColor_3"/>
+
+        <TextBox Panel.ZIndex="1"
+            x:Name="a4"
+            HorizontalAlignment="Center" Height="30" 
+            VerticalAlignment="Center" Width="85"
+            TextWrapping="Wrap" Text="" 
+            FontStyle="Italic" Foreground="#FF686868" Margin="514,176,294,215" BorderBrush="Black" GotFocus="ResetColor_4"/>
+
+        <TextBox Panel.ZIndex="1"
+            x:Name="a5"
+            HorizontalAlignment="Center" Height="30" 
+            VerticalAlignment="Center" Width="86"
+            TextWrapping="Wrap" Text="" 
+            FontStyle="Italic" Foreground="#FF686868" Margin="644,176,163,215" BorderBrush="Black"/>
+
+
+        <TextBlock Panel.ZIndex="0"
+            x:Name="equation" 
+            Height="20" Width="670"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" Margin="115,181,108,220" Foreground="White"                      
+            Text="  (                            )y'''' + (                            )y''' + (                           )y''  +  (                           )y'   +  (                            )y = 0"                      
+            />
 
     </Grid>
 </Window>
