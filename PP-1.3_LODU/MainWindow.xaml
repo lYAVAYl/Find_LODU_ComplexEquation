@@ -77,6 +77,14 @@
             VerticalAlignment="Center" Margin="115,181,108,220" Foreground="White"                      
             Text="  (                            )y'''' + (                            )y''' + (                           )y''  +  (                           )y'   +  (                            )y = 0"                      
             />
+        <TextBlock 
+            x:Name="textBlock_Answer"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center"
+            Height="36" Width="499"
+            TextWrapping="Wrap" 
+            Text=" " 
+            Margin="198,286,196,99" Foreground="White" />
 
     </Grid>
 </Window>
