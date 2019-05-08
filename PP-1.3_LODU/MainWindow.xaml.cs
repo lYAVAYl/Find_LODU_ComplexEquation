@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Numerics;
 
 namespace PP_1._3_LODU
 {
@@ -36,6 +37,7 @@ namespace PP_1._3_LODU
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string answer="";
+            double nothing;
 
 
             if (!isDouble(ref C1, ref C2, ref C3, ref C4, ref C5))
@@ -45,11 +47,12 @@ namespace PP_1._3_LODU
                 if (C1 != 0)
                 {
                     // Формула Феррари (F_Ferrari)
+                    answer = F_Ferrari(C1, C2, C3, C4, C5);
                 }
                 else if (C2 != 0)
                 {
                     // Формула Кардано (F_Kardano)
-                    answer = F_notKordano(C2, C3, C4, C5);
+                    answer = F_Kordano(C2, C3, C4, C5);
                 }
                 else if (C3 != 0)
                 {
@@ -64,17 +67,16 @@ namespace PP_1._3_LODU
                 else if (C5 != 0)
                 {
                     // ну это просто (GGWP)---
-                    answer = "y = 0";
+                    answer = "  y = 0";
                 }
                 else
-                    answer = "Бесконечное множество решений";
+                    answer = "  Бесконечное множество решений";
 
             }
 
 
             textBlock_Answer.Text = answer;            
         }
-
 
 
 
@@ -236,19 +238,15 @@ namespace PP_1._3_LODU
         /// <returns></returns>
         private string EasyPeazy(double a1, double a2)
         {
-            string answer;
+            string answer = "";
 
-            a2 = 0 -a2;
+            a2 *= -1;
 
-            if (a2 % a1 == 0.0)
-                answer = $"y = C1*e^( ({a2 / a1})x )";
-            else
-                answer = $"y = C1*e^( ({a2}/{a1})x )";
+            answer = $"  y = C1*e^( ({Math.Round(a2 / a1, 2)})x )";
 
             return answer;
         }
-
-
+        
         // СДЕЛАНО
         #region Double Trubble
         /// <summary>
@@ -308,7 +306,7 @@ namespace PP_1._3_LODU
 
             if (k1 != k2)
             {
-                answer = $"y = C1*e^( ({k1})x ) + C2*e^( ({k2})x )";
+                answer = $"  y = C1*e^( ({k1})x ) + C2*e^( ({k2})x )";
             }
             else
             {
@@ -324,7 +322,7 @@ namespace PP_1._3_LODU
             double k = (-b) / (2 * a);
             k = Math.Round(k, 3);
 
-            string answer = $"y = C1*e^( ({k})x ) + C2*x*e^( ({k})x )";
+            string answer = $"  y = C1*e^( ({k})x ) + C2*x*e^( ({k})x )";
             return answer;
         }
 
@@ -345,220 +343,43 @@ namespace PP_1._3_LODU
 
             if (k1 == k2)
             {
-                answer = $"y = e^( {alpha} ) * (C1*Cos( {beta} ) + C2*Sin( {beta} ))";
+                answer = $"  y = e^( {alpha} ) * (C1*Cos( {beta} ) + C2*Sin( {beta} ))";
             }
             else
             {
-                answer = $"y = e^( {alpha} ) * (C1*Cos( {beta} ) + C2*x*Sin( {beta} ))";
+                answer = $"  y = e^( {alpha} ) * (C1*Cos( {beta} ) + C2*Sin( {beta} ))";
             }
 
             return answer;
         }
 
         #endregion
+        
+        // СДЕЛАНО
+        #region F_notKordano
 
-
-
+        /// <summary>
+        /// Макс. порядок - 3
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        /// <param name="d"></param>
+        /// <returns></returns>
         private string F_Kordano(double a, double b, double c, double d)
         {
             string answer = "";
-            double x1, x2, x3, x1_i, x2_i, x3_i;
-            double y1, y2, y3, y1_i, y2_i, y3_i;
-            double k1, k2;
-            
-
-            double p = (3.0 * a * c - b * b) / (3.0 * a * a);
-            p = Math.Round(p, 2);
-
-            double q = (2.0 * b * b * b - 9.0 * a * b * c + 27.0 * a * a * d) / (27.0 * a * a * a);
-            q = Math.Round(q, 2);
-
-            double Q = (Math.Pow(p / 3.0, 3)) + (Math.Pow(q / 2.0, 2));
-
-
-
-            //if (Q >= 0.01 && Q< 0.02)
-            //    Q = 0.0;
-
-            double R = (2.0*Math.Pow((double)a, 3) - 9.0*(double)a*(double)b + 27.0*(double)c) / (54.0);
-            
-
-            double alpha = Math.Pow(((-q / 2.0) + Math.Sqrt(Q)), 1/3);
-            alpha = Math.Round(alpha, 2);
-            double beta = Math.Pow(((-q / 2.0) - Math.Sqrt(Q)), 1/3);
-            beta = Math.Round(beta, 2);
-            
-           
-
-            if (Q > 0) // СДЕЛАНО
-            {
-                Q = Math.Round(Q, 2);
-
-
-                k1 = -q / 2 + Math.Sqrt(Q);
-                if (k1 < 0) // k1 -
-                {
-                    k1 *= -1;
-                    k1 = Math.Pow(k1, 1.0 / 3.0); // возведение ^3V
-                    k1 = Math.Round(k1, 2);
-                    k1 *= -1;
-                }
-                else // k2 +
-                {
-                    k1 = Math.Pow(k1, 1.0 / 3.0); // возведение ^3V
-                    k1 = Math.Round(k1, 2);
-                }
-
-
-                k2 = -q / 2 - Math.Sqrt(Q);
-                if (k2 < 0) // k2 -
-                {
-                    k2 *= -1;
-                    k2 = Math.Pow(k2, 1.0 / 3.0); // возведение ^3V
-                    k2 = Math.Round(k2, 2);
-                    k2 *= -1;
-                }
-                else // k2 +
-                {
-                    k2 = Math.Pow(k2, 1.0 / 3.0); // возведение ^3V
-                    k2 = Math.Round(k2, 2);
-                }
-
-
-                y1 = k1+k2;
-                y1 = Math.Round(y1, 2);
-
-                y2 = -(k1 + k2) / 2.0;
-                y2 = Math.Round(y2, 2);
-                y2_i = ((k1 - k2) * Math.Sqrt(3)) / 2;
-                y2_i = Math.Round(y2_i, 2);
-
-                y3 = -(k1 + k2) / 2.0;
-                y3 = Math.Round(y3, 2);
-                y3_i = -((k1 - k2) * Math.Sqrt(3)) / 2;
-                y3_i = Math.Round(y3_i, 2);
-
-
-                x1 = y1 - b / (3.0 * a);
-                x1 = Math.Round(x1, 2);
-
-                x2 = y2 - b / (3.0 * a);
-                x2 = Math.Round(x2, 2);
-                x2_i = y2_i;
-
-                x3 = y3 - b / (3.0 * a);
-                x3 = Math.Round(x3, 2);
-                x3_i = y3_i;
-
-                answer = $"q: {q} \n" +
-                     $"p: {p} \n" +
-                     $"Q: {Q} \n" +
-                     $"R: {R} \n" +
-                     $"alpha: {alpha} \n" +
-                     $"beta: {beta} \n" +
-                     $"y1: {y1} \n" +
-                     $"y2: {y2} | {y2_i} i \n" +
-                     $"y3: {y3} | {y3_i} i \n" +
-                     $"k1: {k1} \n" +
-                     $"k2: {k2} \n" +
-                     $"-------------------------- \n" +
-                     $"x1: {x1} \n" +
-                     $"x2: {x2} + ({x2_i})i \n" +
-                     $"x3: {x3} + ({x3_i})i \n" +
-                     $"\n" +
-                     $"y12 = ^3V( {-(q / 2.0) + Q} ) - {p} / 3*^3V( {-(q / 2.0) + Q} )";
-            }
-            else if (Q < 0)
-            {
-                Q = Math.Round(Q, 2);
-
-
-                y1 = 1;
-                y2 = 2;
-                y3 = 3;
-
-                x1 = 1;
-                x2 = 2;
-                x3 = 3;
-
-
-
-
-
-
-
-                answer = $"q: {q} \n" +
-                     $"p: {p} \n" +
-                     $"Q: {Q} \n" +
-                     $"R: {R} \n" +
-                     $"alpha: {alpha} \n" +
-                     $"beta: {beta} \n" +
-                     $"y1: {y1} \n" +
-                     $"y2: {y2} \n" +
-                     $"y3: {y3} \n" +
-                     $"-------------------------- \n" +
-                     $"x1: {x1} \n" +
-                     $"x2: {x2} \n" +
-                     $"x3: {x3} \n" +
-                     $"\n" +
-                     $"y12 = ^3V( {-(q / 2.0) + Q} ) - {p} / 3*^3V( {-(q / 2.0) + Q} )";
-            }
-            else // СДЕЛАНО
-            {
-                Q = Math.Round(Q, 2);
-
-                y1 = -2 * Math.Pow(q/2.0, 1.0 / 3.0);
-                y2 = Math.Pow(q/2.0, 1.0 / 3.0);
-                y3 = y2;
-
-                x1 = y1 - b / (3.0 * a);
-                x1 = Math.Round(x1, 2);
-                x2 = y2 - b / (3.0 * a);
-                x2 = Math.Round(x2, 2);
-                x3 = y3 - b / (3.0 * a);
-                x3 = Math.Round(x3, 2);
-
-                answer = $"q: {q} \n" +
-                     $"p: {p} \n" +
-                     $"Q: {Q} \n" +
-                     $"R: {R} \n" +
-                     $"alpha: {alpha} \n" +
-                     $"beta: {beta} \n" +
-                     $"y1: {y1} \n" +
-                     $"y2: {y2} \n" +
-                     $"y3: {y3} \n" +
-                     $"-------------------------- \n" +
-                     $"x1: {x1} \n" +
-                     $"x2: {x2} \n" +
-                     $"x3: {x3} \n" +
-                     $"\n" +
-                     $"y12 = ^3V( {-(q / 2.0) + Q} ) - {p} / 3*^3V( {-(q / 2.0) + Q} )";
-
-            }
-
-
-            return answer;
-        }
-
-
-
-        private string F_notKordano(double a, double b, double c, double d)
-        {
-            string answer = "";
-            double x1, x2, x3, x1_i, x2_i, x3_i;
-            double y1, y2, y3, y1_i, y2_i, y3_i;
-            double k1, k2;
+            double x1, x2, x3, x1_i=0.0, x2_i=0.0, x3_i=0.0;
             double F;
             double chis, znam;
 
 
             double p = (3.0 * a * c - b * b) / (3.0 * a * a);
             double q = ((2.0 * b * b * b) - (9.0 * a * b * c) + (27.0 * a * a * d)) / (27.0 * a * a * a);
-
             double S = (4 * Math.Pow(3.0 * a * c - b * b, 3.0) + Math.Pow(2.0 * b * b * b - 9.0 * a * b * c + 27.0 * a * a * d, 2.0)) / (2916.0 * Math.Pow(a, 6.0));
 
             // расчёт F
-            #region F
+            #region press F
             if (q < 0)
             {
                 chis = Math.Sqrt(  Math.Abs( ((q * q) / 4.0) + ((p * p * p) / 27.0) )  );
@@ -578,53 +399,51 @@ namespace PP_1._3_LODU
             #endregion
 
 
-            if (S > 0)
+            if (S > 0) // Дискриминант больше 0
             {
                 S_isBiggerThenZero(out x1, out x2, out x3, out x2_i, out x3_i, q, p, a, b);
                 
-                answer = $"y = C1*e^( ({x1})x ) + e^( ({x2})x ) * ( C2*Cos( ({x2_i})x ) + C3*Sin( ({x3_i})x ) )";
+                answer = $"  y = C1*e^( ({x1})x ) + e^( ({x2})x ) * ( C2*Cos( ({x2_i})x ) + C3*Sin( ({x3_i})x ) )";
             }
-            else if (S < 0)
+            else if (S < 0) // Дискриминант меньше
             {
                 S_isSmallerThenZero(out x1, out x2, out x3, F, p, a, b);
 
-                answer = $"y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*e^( ({x3})x )";
+                answer = $"  y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*e^( ({x3})x )";
             }
-            else
+            else // Дискриминант равен 0
             {
                 S_isZero(out x1, out x2, out x3, q, a, b);
                 
-                if (x1 == x2)
+                if (x1 == x2 && x2 == x3)
                 {
-                    answer = $"y = C1*e^( ({x1})x ) + C2*x*e^( ({x2})x ) + C3*e^( ({x3})x )";
+                    answer = $"  y = C1*e^( ({x1})x ) + C2*x*e^( ({x2})x ) + C3*x^(2)*e^( ({x3})x )";
+                }
+                else if (x1 == x2)
+                {
+                    answer = $"  y = C1*e^( ({x1})x ) + C2*x*e^( ({x2})x ) + C3*e^( ({x3})x )";
                 }
                 else if (x1 == x3)
                 {
-                    answer = $"y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*x*e^( ({x3})x )";
+                    answer = $"  y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*x*e^( ({x3})x )";
                 }
                 else if (x2 == x3)
                 {
-                    answer = $"y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*x*e^( ({x3})x )";
-                }
-                else if (x1 == x2 && x2 == x3)
-                {
-                    answer = $"y = C1*e^( ({x1})x ) + C2*x*e^( ({x2})x ) + C3*x^(2)*e^( ({x3})x )";
-                }
+                    answer = $"  y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*x*e^( ({x3})x )";
+                }                
                 else
                 {
-                    answer = $"y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*e^( ({x3})x )";
+                    answer = $"  y = C1*e^( ({x1})x ) + C2*e^( ({x2})x ) + C3*e^( ({x3})x )";
                 }
 
             }
-
             
-
-
 
             return answer;
         }
 
-
+        #region Дискриминант кубического уравнения
+        
         // РАБОТАЕТ - ДИСКРИМИНАНТ БОЛЬШЕ 0
         private void S_isBiggerThenZero(out double x1, out double x2, out double x3,
                                                          out double x2_i, out double x3_i, 
@@ -723,7 +542,6 @@ namespace PP_1._3_LODU
         }
 
 
-
         // РАБОТАЕТ - ДИСКРИМИНАНТ РАВЕН 0
         private void S_isZero(out double x1, out double x2, out double x3, double q, double a, double b)
         {
@@ -751,5 +569,221 @@ namespace PP_1._3_LODU
 
         }
 
+        #endregion
+
+        #endregion
+
+        /// <summary>
+        /// МАКС. ПОРЯДОК - 4
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        /// <param name="d"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private string F_Ferrari(double a, double b, double c, double d, double e)
+        {
+            string answer = "";
+
+
+            Complex x1 = new Complex(0.0, 0.0);
+            Complex x2 = new Complex(0.0, 0.0);
+            Complex x3 = new Complex(0.0, 0.0);
+            Complex x4 = new Complex(0.0, 0.0);
+
+            // имена всех переменных взяты из Формулы Феррари
+
+            Complex A = new Complex(a, 0.0);
+            Complex B = new Complex(b, 0.0);
+            Complex C = new Complex(c, 0.0);
+            Complex D = new Complex(d, 0.0);
+            Complex E = new Complex(e, 0.0);
+
+
+            double alpha = (-(3.0 * b * b) / (8.0 * a * a)) + (c / a);
+            alpha = Math.Round(alpha, 3);
+            double beta = ((b * b * b) / (8.0 * a * a * a)) - ((b * c) / (2.0 * a * a)) + (d / a);
+            beta = Math.Round(beta, 3);
+            double gamma = ((-3.0 * (b * b * b * b)) / (256.0 * a * a * a * a)) + ((b * b * c) / (16.0 * a * a * a)) - ((b * d) / (4.0 * a * a)) + (e / a);
+            gamma = Math.Round(gamma, 3);
+
+            if (double.IsInfinity(alpha) || double.IsInfinity(beta) || double.IsInfinity(gamma))
+            {
+                answer = "Переполнение!";
+            }
+            else
+            {
+
+
+
+                Complex Alpha = new Complex(alpha, 0.0);
+                Complex Beta = new Complex(beta, 0.0);
+                Complex Gamma = new Complex(gamma, 0.0);
+
+                Complex P = new Complex(0.0, 0.0);
+                Complex Q = new Complex(0.0, 0.0);
+                Complex R = new Complex(0.0, 0.0);
+                Complex U = new Complex(0.0, 0.0);
+                Complex Y = new Complex(0.0, 0.0);
+                Complex W = new Complex(0.0, 0.0);
+
+
+
+
+                if (Beta.x == 0 && Beta.y == 0)
+                {
+                    x1 = (-(B / (4.0 * A)) - Complex.Sqrt(((-Alpha - Complex.Sqrt((Alpha * Alpha) - (4.0 * Gamma), 2.0)) / 2.0), 2.0));
+
+                    x2 = (-(B / (4.0 * A)) - Complex.Sqrt(((-Alpha + Complex.Sqrt((Alpha * Alpha) - (4.0 * Gamma), 2.0)) / 2.0), 2.0));
+
+                    x3 = (-(B / (4.0 * A)) + Complex.Sqrt(((-Alpha - Complex.Sqrt((Alpha * Alpha) - (4.0 * Gamma), 2.0)) / 2.0), 2.0));
+
+                    x4 = (-(B / (4.0 * A)) + Complex.Sqrt(((-Alpha + Complex.Sqrt((Alpha * Alpha) - (4.0 * Gamma), 2.0)) / 2.0), 2.0));
+
+                }
+                else
+                {
+                    P = ((-((Alpha * Alpha) / (12.0))) - (Gamma));
+                    P.x = Math.Round(P.x, 3);
+                    P.y = Math.Round(P.y, 3);
+
+                    Q = (((Alpha * Gamma) / 3.0) - ((Beta * Beta) / 8.0) - ((Alpha * Alpha * Alpha) / 108.0));
+                    Q.x = Math.Round(Q.x, 3);
+                    Q.y = Math.Round(Q.y, 3);
+
+                    R = (-(Q / 2.0) - (Complex.Sqrt((((Q * Q) / 4.0) + ((P * P * P) / 27.0)), 2.0)));
+                    R.x = Math.Round(R.x, 3);
+                    R.y = Math.Round(R.y, 3);
+
+                    U = Complex.Sqrt(R, 3.0);
+                    U.x = Math.Round(U.x, 3);
+                    U.y = Math.Round(U.y, 3);
+
+                    Y = (-((5.0 * Alpha) / 6.0) + (U));
+                    Y.x = Math.Round(Y.x, 3);
+                    Y.y = Math.Round(Y.y, 3);
+
+                    if (U.x == 0 && U.y == 0)
+                    {
+                        Y = (Y - (Complex.Sqrt(Q, 3.0)));
+                        Y.x = Math.Round(Y.x, 3);
+                        Y.y = Math.Round(Y.y, 3);
+                    }
+                    else
+                    {
+                        Y = (Y + ((-P) / (3.0 * U)));
+                        Y.x = Math.Round(Y.x, 3);
+                        Y.y = Math.Round(Y.y, 3);
+                    }
+
+
+                    W = (Complex.Sqrt(((Alpha) + (2.0 * Y)), 2.0));
+                    W.x = Math.Round(W.x, 3);
+                    W.y = Math.Round(W.y, 3);
+
+
+                    x1 = (((-B) / (4.0 * A)) + ((W - Complex.Sqrt(-((3.0 * Alpha) + (2.0 * Y) + ((2.0 * Beta) / W)), 2.0)) / 2.0));
+                    x2 = (((-B) / (4.0 * A)) - ((W - Complex.Sqrt(-((3.0 * Alpha) + (2.0 * Y) - ((2.0 * Beta) / W)), 2.0)) / 2.0));
+                    x3 = (((-B) / (4.0 * A)) - ((W + Complex.Sqrt(-((3.0 * Alpha) + (2.0 * Y) - ((2.0 * Beta) / W)), 2.0)) / 2.0));
+                    x4 = (((-B) / (4.0 * A)) + ((W + Complex.Sqrt(-((3.0 * Alpha) + (2.0 * Y) + ((2.0 * Beta) / W)), 2.0)) / 2.0));
+
+                }
+
+
+                x1.x = Math.Round(x1.x, 2);
+                x1.y = Math.Round(x1.y, 2);
+
+                x2.x = Math.Round(x2.x, 2);
+                x2.y = Math.Round(x2.y, 2);
+
+                x3.x = Math.Round(x3.x, 2);
+                x3.y = Math.Round(x3.y, 2);
+
+                x4.x = Math.Round(x4.x, 2);
+                x4.y = Math.Round(x4.y, 2);
+
+
+                // вывод ответа
+                #region ответ
+                if (x1 == x2 && x2 == x3 && x3 == x4)
+                {
+                    if (x1.y != 0)
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + C2*Sin({Math.Abs(x2.y)}x)) + x*e^({x1.x}) * (C1^(2)*Cos({Math.Abs(x3.y)}x) + C2^(2)*Sin({Math.Abs(x4.y)}x))";
+                    }
+                    else
+                    {
+                        answer = $"y = C1e^(({x1})x) + C2*x*e^(({x2})x) + C3*x^(2)*e^(({x3})x) + C4*x^(3)*e^(({x4})x)";
+                    }
+                }
+                else if (x1 == x2)
+                {
+                    if (x3 == x4)
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + C2*Sin({Math.Abs(x2.y)}x)) + e^({x3.x}x) * (C3*Cos({Math.Abs(x3.y)}x) + C4*Sin({Math.Abs(x4.y)}x))";
+                    }
+                    else
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + CC2*Sin({Math.Abs(x2.y)}x)) + C3e^({x3}x) + C4e^({x4}x)";
+                    }
+                }
+                else if (x1 == x3)
+                {
+                    if (x2 == x4)
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + C3*Sin({Math.Abs(x3.y)}x)) + e^({x2.x}x) * (C2*Cos({Math.Abs(x2.y)}x) + C4*Sin({Math.Abs(x4.y)}x))";
+                    }
+                    else
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + C3*Sin({Math.Abs(x3.y)}x)) + C2e^({x2}x) + C4e^({x4}x)";
+                    }
+                }
+                else if (x1 == x4)
+                {
+                    if (x2 == x3)
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + C4*Sin({Math.Abs(x4.y)}x)) + e^({x2.x}x) * (C2*Cos({Math.Abs(x2.y)}x) + C3*Sin({Math.Abs(x3.y)}x))";
+                    }
+                    else
+                    {
+                        answer = $"y = e^({x1.x}x) * (C1*Cos({Math.Abs(x1.y)}x) + C4*Sin({Math.Abs(x4.y)}x)) + C2e^({x2}x) + C3e^({x3}x)";
+                    }
+                }
+                else if (x2 == x3)
+                {
+                    answer = $"y = e^({x2.x}x) * (C2*Cos({Math.Abs(x2.y)}x) + C3*Sin({Math.Abs(x3.y)}x)) + C1e^({x1}x) + C4e^({x4}x)";
+                }
+                else if (x2 == x4)
+                {
+                    answer = $"y = e^({x2.x}x) * (C2*Cos({Math.Abs(x2.y)}x) + C4*Sin({Math.Abs(x4.y)}x)) + C1e^({x1}x) + C3e^({x3}x)";
+                }
+                else if (x3 == x4)
+                {
+                    answer = $"y = e^({x3.x}x) * (C3*Cos({Math.Abs(x3.y)}x) + C4*Sin({Math.Abs(x4.y)}x)) + C1e^({x1}x) + C2e^({x2}x)";
+                }
+                else if (x1 != x2 && x2 != x3 && x3 != x4)
+                {
+                    answer = $"y = C1e^(({x1})x) + C2e^(({x2})x) + C3e^(({x3})x) + C4e^(({x4})x)";
+                }
+                #endregion
+
+
+            }
+
+            return answer;
+        }
+
+        // очистка
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            a1.Text = "";
+            a2.Text = "";
+            a3.Text = "";
+            a4.Text = "";
+            a5.Text = "";
+
+            textBlock_Answer.Text = "";
+        }
     }
 }
